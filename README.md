@@ -10,7 +10,7 @@ version: '3.7'
 services:
 
   lepresenced:
-    image: cheanrod/lepresenced-docker
+    image: cheanrod/lepresenced
     restart: always
     environment:
       - TZ=Europe/Berlin
