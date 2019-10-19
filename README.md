@@ -4,7 +4,7 @@ Docker image for lepresenced as part of FHEM.
 
 Example of usage inside a docker-compose file:
 
-````sh
+````yaml
 version: '3.7'
 
 services:
