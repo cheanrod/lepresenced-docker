@@ -1,25 +1,22 @@
 FROM debian:buster-slim
 
-ENV DEBIAN_FRONTEND noninteractive
-ENV TERM xterm
-
-RUN apt-get update && apt-get -qqy --no-install-recommends install \
-    perl \
-    libnet-server-perl \
-    libusb-1.0-0-dev \
+RUN apt-get update && apt-get install -y \
+    blueman \
     bluetooth \
     bluez \
-    blueman \
+    bluez-hcidump \
+    curl \
+    libnet-server-perl \
+    libusb-1.0-0-dev \
+    perl \
     tzdata \
-    bluez-hcidump && \
-    apt-get clean && cd / && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt
-
-ADD https://svn.fhem.de/fhem/trunk/fhem/contrib/PRESENCE/lepresenced lepresenced
-RUN chmod +x lepresenced && \
-    chgrp -cR dialout lepresenced
+RUN  curl --insecure -O https://svn.fhem.de/fhem/trunk/fhem/contrib/PRESENCE/lepresenced \
+    && chmod +x lepresenced && chgrp dialout lepresenced
 
 EXPOSE 5333
 
-CMD /usr/bin/perl /opt/lepresenced --device "hci0" --listenaddress "0.0.0.0" --listenport 5333 --loglevel "LOG_WARNING" --logtarget stdout
+CMD ["/opt/lepresenced", "--bluetoothdevice", "hci0", "--listenaddress", "0.0.0.0", \
+    "--listenport", "5333", "--loglevel", "LOG_WARNING", "--logtarget", "stdout"]
