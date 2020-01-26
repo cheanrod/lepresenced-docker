@@ -1,12 +1,13 @@
-name: buildx
+name: Build Docker image with buildx
 
 on:
   push:
-    branches: master
-    tags:
+    paths-ignore:
+    - '.github/**'
 
 jobs:
   buildx:
+    name: Build and push
     runs-on: ubuntu-latest
     steps:
       -
