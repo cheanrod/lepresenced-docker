@@ -1,4 +1,4 @@
-FROM debian:buster-20200422-slim
+FROM debian:buster-20200514-slim
 
 RUN apt-get update && apt-get install -y \
     blueman \
